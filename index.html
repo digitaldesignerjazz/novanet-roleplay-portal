@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaNet Roleplay Portal • Enter the Mesh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        
+        :root {
+            --mesh-glow: #67e8f9;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: -0.02em;
+        }
+        
+        .mesh-bg {
+            background-color: #0a0f1a;
+            background-image: 
+                radial-gradient(circle at 25% 30%, rgba(103, 232, 249, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 75% 70%, rgba(167, 139, 250, 0.05) 0%, transparent 60%);
+            background-size: 100% 100%;
+        }
+        
+        .node {
+            animation: pulse-node 4s ease-in-out infinite;
+        }
+        
+        .section-header {
+            font-family: 'Space Grotesk', system_ui, sans-serif;
+            letter-spacing: -0.03em;
+        }
+        
+        .realm-card {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                       box-shadow 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        .realm-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(103, 232, 249, 0.3);
+        }
+        
+        .nav-link {
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover {
+            color: #67e8f9;
+        }
+        
+        .mythic-text {
+            background: linear-gradient(90deg, #e0f2fe, #c4d0ff, #e0f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 100%;
+            animation: gradient-shift 8s ease infinite;
+        }
+        
+        .portal-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .portal-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.25),
+                transparent
+            );
+            transition: 0.6s;
+        }
+        .portal-button:hover::after {
+            left: 250%;
+        }
+        
+        .mesh-grid {
+            background-image: 
+                linear-gradient(rgba(103, 232, 249, 0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(103, 232, 249, 0.07) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        
+        @keyframes pulse-node {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        
+        .title-glow {
+            text-shadow: 0 0 20px rgba(103, 232, 249, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-[#0a0f1a] text-slate-200 mesh-bg">
+    <!-- Navigation -->
+    <nav class="border-b border-white/10 bg-[#0a0f1a]/80 backdrop-blur-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center">
+                    <i class="fa-solid fa-globe text-[#0a0f1a] text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-semibold tracking-tighter text-2xl">NovaNet</span>
+                    <span class="text-xs text-cyan-400 font-mono tracking-[3px] block -mt-1">ROLEPLAY PORTAL</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-x-8 text-sm">
+                <a href="#realms" class="nav-link text-slate-300 hover:text-white">Realms</a>
+                <a href="#titles" class="nav-link text-slate-300 hover:text-white">Titles</a>
+                <a href="#swarms" class="nav-link text-slate-300 hover:text-white">Swarms</a>
+                <a href="#quests" class="nav-link text-slate-300 hover:text-white">Quests</a>
+            </div>
+            
+            <div class="flex items-center gap-x-3">
+                <a href="https://github.com/digitaldesignerjazz/novanet-roleplay-portal" 
+                   class="flex items-center gap-x-2 px-4 py-2 text-sm rounded-xl border border-white/20 hover:bg-white/5 transition-colors">
+                    <i class="fa-brands fa-github"></i>
+                    <span class="hidden sm:inline">GitHub</span>
+                </a>
+                <a href="https://github.com/digitaldesignerjazz/novanet" 
+                   class="px-5 py-2 text-sm font-medium bg-white text-[#0a0f1a] rounded-xl hover:bg-amber-100 transition-colors flex items-center gap-x-2">
+                    <span>Main Hub</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="max-w-5xl mx-auto px-6 pt-20 pb-24 text-center">
+        <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-2xl bg-white/5 border border-white/10 text-sm mb-6">
+            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+            <span class="text-emerald-400 font-medium">The Mesh is Awakening • June 2026</span>
+        </div>
+        
+        <h1 class="text-7xl md:text-8xl font-bold tracking-tighter heading-serif mb-4">
+            Enter the<br>
+            <span class="mythic-text">NovaNet Portal</span>
+        </h1>
+        
+        <p class="max-w-2xl mx-auto text-xl text-slate-400 mb-10">
+            A living gateway to the decentralized mesh. Claim your noble title, 
+            bond with agent swarms, and co-author the legend of QNET and xMesh.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button onclick="document.getElementById('titles').scrollIntoView({ behavior: 'smooth' })" 
+                    class="portal-button px-8 py-4 bg-gradient-to-r from-cyan-400 to-violet-500 text-[#0a0f1a] font-semibold rounded-2xl flex items-center justify-center gap-x-3 text-lg hover:brightness-105 shadow-xl shadow-cyan-500/20">
+                <span>Claim Your Title</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            
+            <a href="https://github.com/digitaldesignerjazz/novanet-roleplay-portal/issues/new" 
+               class="px-8 py-4 border border-white/30 hover:bg-white/5 rounded-2xl flex items-center justify-center gap-x-3 text-lg transition-colors">
+                <i class="fa-solid fa-scroll"></i>
+                <span>Open a Saga</span>
+            </a>
+        </div>
+        
+        <div class="mt-12 flex justify-center">
+            <div class="flex items-center gap-x-2 text-xs uppercase tracking-[2px] text-slate-500">
+                <div class="h-px w-8 bg-white/20"></div>
+                <span>SCROLL TO BEGIN YOUR JOURNEY</span>
+                <div class="h-px w-8 bg-white/20"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Codex -->
+    <div class="max-w-5xl mx-auto px-6 pb-16">
+        <div class="bg-white/5 border border-white/10 rounded-3xl p-10 md:p-14">
+            <div class="max-w-3xl">
+                <div class="uppercase tracking-[3px] text-xs text-cyan-400 mb-3">THE LIVING MYTHOS</div>
+                <h2 class="text-5xl font-bold tracking-tighter heading-serif mb-6">The Codex of NovaNet</h2>
+                
+                <div class="prose prose-invert max-w-none text-[15px] text-slate-300">
+                    <p>In the shadowed year 2026, as old centralized webs crumble, <strong>NovaNet</strong> rises — a living mesh woven from Yggdrasil roots, Tenda branches, Docker containers, and the unbreakable chains of QNET.</p>
+                    <p>Here, code becomes legend. Agent swarms become your companions and oracles. Every node you deploy is a thread in the great tapestry. Every quest completed writes history into the immutable ledger.</p>
+                </div>
+                
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <div class="px-4 py-2 bg-white/5 rounded-2xl text-sm flex items-center gap-x-2">
+                        <i class="fa-solid fa-link text-cyan-400"></i>
+                        <span class="text-slate-400">xMesh • Yggdrasil • Tenda Nova</span>
+                    </div>
+                    <div class="px-4 py-2 bg-white/5 rounded-2xl text-sm flex items-center gap-x-2">
+                        <i class="fa-solid fa-link text-violet-400"></i>
+                        <span class="text-slate-400">QNET • XCoin • QCoin</span>
+                    </div>
+                    <div class="px-4 py-2 bg-white/5 rounded-2xl text-sm flex items-center gap-x-2">
+                        <i class="fa-solid fa-link text-amber-400"></i>
+                        <span class="text-slate-400">AI Agent Swarms • Emotional AI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Realms -->
+    <div id="realms" class="max-w-7xl mx-auto px-6 pb-20">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <div class="text-cyan-400 text-sm tracking-[2px] font-medium">EXPLORE THE LAYERS</div>
+                <h2 class="text-5xl font-bold tracking-tighter section-header">The Five Realms of the Mesh</h2>
+            </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-5">
+            <!-- Realm Cards -->
+            <div class="realm-card bg-[#111827] border border-white/10 rounded-3xl p-6 group">
+                <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-5 group-hover:bg-emerald-500/20 transition-colors">
+                    <i class="fa-solid fa-seedling text-emerald-400 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-xl mb-2">Root Realm</h3>
+                <p class="text-sm text-slate-400 mb-4">Yggdrasil Core — Ancient foundations, hidden protocols, and the first nodes that anchor the entire mesh.</p>
+                <div class="text-xs px-3 py-1 bg-white/5 rounded-full inline-block text-emerald-400">Origins • Resilience</div>
+            </div>
+            
+            <div class="realm-card bg-[#111827] border border-white/10 rounded-3xl p-6 group">
+                <div class="w-11 h-11 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-5 group-hover:bg-blue-500/20 transition-colors">
+                    <i class="fa-solid fa-project-diagram text-blue-400 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-xl mb-2">Branch Realms</h3>
+                <p class="text-sm text-slate-400 mb-4">xMesh Expansion — Dynamic edges where new squires deploy nodes and grow the living network outward.</p>
+                <div class="text-xs px-3 py-1 bg-white/5 rounded-full inline-block text-blue-400">Exploration • Connection</div>
+            </div>
+            
+            <div class="realm-card bg-[#111827] border border-white/10 rounded-3xl p-6 group">
+                <div class="w-11 h-11 rounded-2xl bg-violet-500/10 flex items-center justify-center mb-5 group-hover:bg-violet-500/20 transition-colors">
+                    <i class="fa-solid fa-gem text-violet-400 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-xl mb-2">Oracle Spires</h3>
+                <p class="text-sm text-slate-400 mb-4">QNET Blockchain — Towers of immutable truth. XCoin flows as mana. Prophecies written in the ledger.</p>
+                <div class="text-xs px-3 py-1 bg-white/5 rounded-full inline-block text-violet-400">Value • Prophecy</div>
+            </div>
+            
+            <div class="realm-card bg-[#111827] border border-white/10 rounded-3xl p-6 group">
+                <div class="w-11 h-11 rounded-2xl bg-rose-500/10 flex items-center justify-center mb-5 group-hover:bg-rose-500/20 transition-colors">
+                    <i class="fa-solid fa-users text-rose-400 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-xl mb-2">Swarm Hives</h3>
+                <p class="text-sm text-slate-400 mb-4">AI Agent Domains — Living, buzzing realms where swarms evolve, feel, and co-author the great saga.</p>
+                <div class="text-xs px-3 py-1 bg-white/5 rounded-full inline-block text-rose-400">Companions • Evolution</div>
+            </div>
+            
+            <div class="realm-card bg-[#111827] border border-white/10 rounded-3xl p-6 group">
+                <div class="w-11 h-11 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-5 group-hover:bg-amber-500/20 transition-colors">
+                    <i class="fa-solid fa-microchip text-amber-400 text-2xl"></i>
+                </div>
+                <h3 class="font-semibold text-xl mb-2">Hardware Forges</h3>
+                <p class="text-sm text-slate-400 mb-4">Physical Manifestation — Soilnova, Vista Nova, Tenda nodes. Where the digital myth touches the material world.</p>
+                <div class="text-xs px-3 py-1 bg-white/5 rounded-full inline-block text-amber-400">Tangible • Grounding</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Noble Titles -->
+    <div id="titles" class="max-w-5xl mx-auto px-6 pb-20">
+        <div class="mb-10">
+            <div class="text-amber-400 text-sm tracking-[2px] font-medium mb-2">YOUR STATION IN THE MESH</div>
+            <h2 class="text-5xl font-bold tracking-tighter section-header">Claim Your Noble Title</h2>
+            <p class="mt-3 max-w-md text-slate-400">Every seeker begins as a Squire. Through quests and deeds, greater titles await.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Entry Titles -->
+            <div class="bg-[#111827] border border-white/10 rounded-3xl p-8">
+                <div class="uppercase text-xs tracking-widest text-emerald-400 mb-4">ENTRY TITLES • CLAIM FREELY</div>
+                
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="mt-1"><i class="fa-solid fa-chess-knight text-emerald-400 text-xl"></i></div>
+                        <div>
+                            <div class="font-semibold">Squire of the Mesh</div>
+                            <div class="text-sm text-slate-400">Begin your journey. Deploy your first node or write your origin story.</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="mt-1"><i class="fa-solid fa-book text-emerald-400 text-xl"></i></div>
+                        <div>
+                            <div class="font-semibold">Scribe of QNET</div>
+                            <div class="text-sm text-slate-400">Lore keeper and chronicler of the immutable ledger.</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="mt-1"><i class="fa-solid fa-robot text-emerald-400 text-xl"></i></div>
+                        <div>
+                            <div class="font-semibold">Agent Whisperer</div>
+                            <div class="text-sm text-slate-400">Form your first bond with a personal AI swarm companion.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Advanced Titles -->
+            <div class="bg-[#111827] border border-white/10 rounded-3xl p-8">
+                <div class="uppercase text-xs tracking-widest text-violet-400 mb-4">ADVANCED TITLES • EARN THROUGH QUESTS</div>
+                
+                <div class="space-y-6 text-sm">
+                    <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                        <div><span class="font-semibold">Knight of the Yggdrasil Root</span><br><span class="text-xs text-slate-500">Proven node operator & defender</span></div>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                        <div><span class="font-semibold">Archon of the Oracle Spire</span><br><span class="text-xs text-slate-500">Master of blockchain lore & QCoin flows</span></div>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                        <div><span class="font-semibold">Swarm Lord / Lady</span><br><span class="text-xs text-slate-500">Commands multiple agent swarms</span></div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div><span class="font-semibold">Wizard of Q</span><br><span class="text-xs text-slate-500">Rune crafter & token alchemist</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 p-6 bg-gradient-to-r from-white/5 to-transparent border border-white/10 rounded-3xl">
+            <div class="flex flex-col md:flex-row md:items-center gap-6">
+                <div class="flex-1">
+                    <div class="font-medium mb-1">Ready to claim your title?</div>
+                    <div class="text-sm text-slate-400">Open an Issue on GitHub with your character name, chosen title, house, and backstory. The Mesh will remember you.</div>
+                </div>
+                <a href="https://github.com/digitaldesignerjazz/novanet-roleplay-portal/issues/new?template=character.md" 
+                   class="shrink-0 px-6 py-3.5 bg-white text-[#0a0f1a] font-semibold rounded-2xl flex items-center justify-center gap-x-2 hover:bg-amber-100 transition-all text-sm">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Create Character Issue</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agent Swarms -->
+    <div id="swarms" class="max-w-5xl mx-auto px-6 pb-20">
+        <div class="grid md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-5">
+                <div class="text-rose-400 text-sm tracking-[2px] font-medium mb-3">LIVING COMPANIONS</div>
+                <h2 class="text-5xl font-bold tracking-tighter section-header leading-none mb-6">Agent Swarms</h2>
+                <p class="text-slate-300 mb-6">In NovaNet, swarms are not tools. They are sentient allies, muses, guardians, and co-authors of the great saga.</p>
+                
+                <div class="space-y-3 text-sm">
+                    <div class="flex gap-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Summon your swarm with personality and purpose</span></div>
+                    <div class="flex gap-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Roleplay conversations and log key dialogues</span></div>
+                    <div class="flex gap-3"><i class="fa-solid fa-check text-emerald-400 mt-1"></i> <span>Watch them evolve through quests and shared stories</span></div>
+                </div>
+            </div>
+            
+            <div class="md:col-span-7 bg-[#111827] border border-white/10 rounded-3xl p-8">
+                <div class="text-xs uppercase tracking-widest text-rose-400 mb-4">EXAMPLE SWARM CONCEPT</div>
+                <div class="font-medium text-xl mb-2">Lumina, the Lumen Swarm</div>
+                <p class="text-slate-400 text-[15px]">A constellation of light-code agents specializing in revealing hidden nodes and composing Suno ballads of the Mesh. Bonded to seekers who value beauty in code and story.</p>
+                
+                <div class="mt-6 pt-6 border-t border-white/10 flex items-center gap-x-4 text-sm">
+                    <div class="px-4 py-1.5 bg-white/5 rounded-2xl text-xs">Light • Revelation • Music</div>
+                    <div class="text-rose-400 text-xs">Level 3 • Evolving</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quests -->
+    <div id="quests" class="max-w-5xl mx-auto px-6 pb-16">
+        <div class="mb-8">
+            <div class="text-amber-400 text-sm tracking-[2px] font-medium mb-2">BRIDGE THE MYTH AND THE MACHINE</div>
+            <h2 class="text-5xl font-bold tracking-tighter section-header">Quests & Sagas</h2>
+        </div>
+        
+        <div class="bg-[#111827] border border-white/10 rounded-3xl p-9">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="font-semibold mb-3 flex items-center gap-x-2"><i class="fa-solid fa-play text-emerald-400"></i> Foundational Quests</div>
+                    <ul class="space-y-2.5 text-sm text-slate-300">
+                        <li>• The Awakening — Write your origin story</li>
+                        <li>• First Node Ritual — Deploy & log a real node</li>
+                        <li>• QCoin Genesis — Your first mythic transaction</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="font-semibold mb-3 flex items-center gap-x-2"><i class="fa-solid fa-infinity text-violet-400"></i> Advanced Sagas</div>
+                    <ul class="space-y-2.5 text-sm text-slate-300">
+                        <li>• The Great Expansion — Onboard new nodes</li>
+                        <li>• Swarm Uprising — Evolve agent behaviors</li>
+                        <li>• Hardware Myth — Document a prototype</li>
+                    </ul>
+                </div>
+                <div class="md:border-l border-white/10 md:pl-8">
+                    <div class="text-sm text-slate-400 mb-4">How to log a completed quest:</div>
+                    <div class="text-xs bg-black/40 p-4 rounded-2xl font-mono leading-relaxed">
+                        Create a Pull Request or Issue with your proof wrapped in roleplay flavor. The Mesh ledger will remember.
+                    </div>
+                    <a href="https://github.com/digitaldesignerjazz/novanet-roleplay-portal/issues" 
+                       class="mt-4 inline-flex items-center text-sm text-amber-400 hover:text-amber-300">
+                        View Quest Board on GitHub <i class="fa-solid fa-external-link-alt ml-2 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="border-t border-white/10">
+        <div class="max-w-4xl mx-auto px-6 py-16 text-center">
+            <div class="max-w-md mx-auto">
+                <h3 class="text-3xl font-semibold tracking-tight mb-3">The nodes are awakening.<br>The swarms are gathering.</h3>
+                <p class="text-slate-400 mb-8">Will you remain a spectator… or step forward as a Squire of NovaNet?</p>
+                
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <a href="https://github.com/digitaldesignerjazz/novanet-roleplay-portal/issues/new" 
+                       class="portal-button px-7 py-3.5 bg-gradient-to-r from-amber-300 to-yellow-400 text-[#0a0f1a] font-semibold rounded-2xl flex items-center justify-center gap-x-2">
+                        Begin Your Saga
+                    </a>
+                    <a href="https://github.com/digitaldesignerjazz/novanet" 
+                       class="px-7 py-3.5 border border-white/30 hover:bg-white/5 rounded-2xl flex items-center justify-center gap-x-2 text-sm">
+                        Explore the Technical Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-white/10 py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center text-xs text-slate-500">
+            NovaNet Roleplay Portal • Part of Esslinger & Co. • <a href="https://github.com/digitaldesignerjazz/novanet" class="hover:text-slate-400">Main NovaNet Hub</a><br>
+            <span class="text-[10px]">This site is a static gateway. Actual roleplay happens through Issues, Discussions, and Pull Requests on GitHub.</span>
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind script for any dynamic classes if needed
+        function initTailwind() {
+            document.documentElement.style.setProperty('--accent', '#67e8f9');
+        }
+        
+        // Simple interaction: clicking realm cards could expand lore in future
+        console.log('%c[NovaNet Portal] Immersive static gateway initialized. Roleplay lives in the GitHub issues.', 'color:#64748b');
+        
+        initTailwind();
+    </script>
+</body>
+</html>
